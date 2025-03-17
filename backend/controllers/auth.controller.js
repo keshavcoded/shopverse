@@ -115,13 +115,12 @@ export const signin = async (req, res) => {
 
 export const signout = async (req, res) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.cookies["refresh-token"];
     if (refreshToken) {
-      const decodedUserId = jwt.verify(
-        refreshToken,
-        ENV_VARS.REFRESH_TOKEN_SECRET
-      );
-      await redis.del(`refreshToken:${decodedUserId}`);
+      const decoded = jwt.verify(refreshToken, ENV_VARS.REFRESH_TOKEN_SECRET);
+      const decodedUserId = decoded.userID;
+      console.log(decodedUserId)
+      await redis.del(`refresh_token:${decodedUserId}`); //refresh_token:67d86bf99103e3e300ea5683
     }
 
     res.clearCookie("acess-token");
