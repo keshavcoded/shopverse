@@ -1,6 +1,4 @@
 import Redis from "ioredis";
-import dotenv from "dotenv";
+import { ENV_VARS } from "./envVars.js";
 
-dotenv.config();
-
-export const redis = new Redis(process.env.REDIS_URL);
+export const redis = new Redis(ENV_VARS.REDIS_URL);

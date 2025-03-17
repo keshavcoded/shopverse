@@ -2,6 +2,10 @@ import zod from "zod";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { redis } from "../configs/redis.js";
+import { ENV_VARS } from "../configs/envVars.js";
+import { generateToken } from "../utils/generateToken.js";
+import { storeRefreshToken } from "../utils/redisStore.js";
+import { setCookies } from "../utils/setCookies.js";
 
 const signupBody = zod.object({
   email: zod.string().min(1, "Email is required").email("Invalid email"),
@@ -11,43 +15,6 @@ const signupBody = zod.object({
     .min(6, "Password must be minimum 6 characters"),
   name: zod.string().min(1, "Name is required"),
 });
-
-const generateToken = (userID) => {
-  const accessToken = jwt.sign({ userID }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
-  });
-
-  const refreshToken = jwt.sign({ userID }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "7d",
-  });
-
-  return { accessToken, refreshToken };
-};
-
-const storeRefreshToken = async (userID, refreshToken) => {
-  await redis.set(
-    `refresh_token:${userID}`,
-    refreshToken,
-    "EX",
-    7 * 24 * 60 * 60
-  );
-};
-
-const setCookies = async (res, accessToken, refreshToken) => {
-  res.cookie("acess-token", accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 15 * 60 * 1000,
-  });
-
-  res.cookie("refresh-token", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    samSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
-};
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -86,10 +53,60 @@ export const signup = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
     console.log("Error in signup controller", error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+const signinBody = zod.object({
+  email: zod.string().min(1, "Email is required").email("Enter a valid email"),
+  password: zod.string().min(1, "Password is required"),
+});
+
+export const signin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const result = signinBody.safeParse(req.body);
+    if (!result.success) {
+      const errors = result.error.errors.map((err) => {
+        return {
+          field: err.path.join("."),
+          message: err.message,
+        };
+      });
+      return res.status(400).json({
+        success: false,
+        errors,
+      });
+    }
+    const user = await User.findOne({ email: email });
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
+    }
+
+    const { accessToken, refreshToken } = generateToken(user._id);
+
+    await storeRefreshToken(user._id, refreshToken);
+    setCookies(res, accessToken, refreshToken);
+
+    return res.status(200).json({
+      success: true,
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
+  } catch (error) {
+    console.log("Error in signin controller : ", error.message);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -102,7 +119,7 @@ export const signout = async (req, res) => {
     if (refreshToken) {
       const decodedUserId = jwt.verify(
         refreshToken,
-        process.env.REFRESH_TOKEN_SECRET
+        ENV_VARS.REFRESH_TOKEN_SECRET
       );
       await redis.del(`refreshToken:${decodedUserId}`);
     }
