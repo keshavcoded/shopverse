@@ -95,3 +95,29 @@ export const signup = async (req, res) => {
       .json({ success: false, message: "Internal server error" });
   }
 };
+
+export const signout = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      const decodedUserId = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET
+      );
+      await redis.del(`refreshToken:${decodedUserId}`);
+    }
+
+    res.clearCookie("acess-token");
+    res.clearCookie("refresh-token");
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.log("Error in signout controller : ", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
