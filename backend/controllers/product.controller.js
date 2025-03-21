@@ -47,7 +47,7 @@ export const createProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const product = await Product.findById(id);
     if (!product) {
       return res
@@ -97,5 +97,61 @@ export const getFeaturedProducts = async (req, res) => {
   } catch (error) {
     console.log("Error in featured products controller : ", error.message);
     res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const getRecommendedproducts = async (req, res) => {
+  try {
+    const recommendedProducts = await Product.aggregate([
+      {
+        $sample: { size: 3 },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          image: 1,
+          price: 1,
+        },
+      },
+    ]);
+    res.status(200).json({
+      success: true,
+      recommendedProducts: recommendedProducts,
+    });
+  } catch (error) {
+    console.log(
+      "Error in get recommened products controller : ",
+      error.message
+    );
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getProductsOnCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+    const products = await Product.find({ category: category });
+    if (!products) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No products found in the category" });
+    }
+    return res.status(200).json({
+      sucess: true,
+      categoryProducts: products,
+    });
+  } catch (error) {
+    console.log(
+      "Error in get products by category controller : ",
+      error.message
+    );
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
