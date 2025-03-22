@@ -5,7 +5,8 @@ import { connectDB } from "./configs/db.js";
 import cookieParser from "cookie-parser";
 import { ENV_VARS } from "./configs/envVars.js";
 import productRoutes from "./routes/product.route.js";
-import cartRoutes from "./routes/cart.route.js"
+import cartRoutes from "./routes/cart.route.js";
+import voucherRoutes from "./routes/voucher.route.js";
 
 const app = express();
 
@@ -17,7 +18,8 @@ const PORT = ENV_VARS.PORT || 3000;
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/products", productRoutes);
-app.use("/api/v1/cart", cartRoutes)
+app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/vouchers", voucherRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
