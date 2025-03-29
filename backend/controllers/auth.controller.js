@@ -1,5 +1,5 @@
 import zod from "zod";
-import { User } from "../models/user.model.js";
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { redis } from "../configs/redis.js";
 import { ENV_VARS } from "../configs/envVars.js";
@@ -174,6 +174,17 @@ export const refreshToken = async (req, res) => {
       .json({ success: true, message: "Token refreshed successfully" });
   } catch (error) {
     console.log("Error in the refresh token contoller : ", error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const getUserProfile = async (req, res) => {
+  try {
+    return res.status(200).json({ success: true, user: req.user });
+  } catch (error) {
+    console.log("Error in getUserProfile controller : ", error.message);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

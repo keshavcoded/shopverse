@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ENV_VARS } from "../configs/envVars.js";
-import { User } from "../models/user.model.js";
+import User from "../models/user.model.js";
 
 export const checkAuth = async (req, res, next) => {
   try {
@@ -8,7 +8,10 @@ export const checkAuth = async (req, res, next) => {
     if (!accessToken) {
       return res
         .status(400)
-        .json({ success: false, message: "Authorization failed - No token provided" });
+        .json({
+          success: false,
+          message: "Authorization failed - No token provided",
+        });
     }
     try {
       const decoded = jwt.verify(accessToken, ENV_VARS.ACCESS_TOKEN_SECRET);
