@@ -1,4 +1,4 @@
-import Voucher from "../models/voucher.model";
+import Voucher from "../models/voucher.model.js";
 
 export const getVoucher = async (req, res) => {
   try {
