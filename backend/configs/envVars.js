@@ -8,5 +8,6 @@ export const ENV_VARS = {
   REDIS_URL: process.env.REDIS_URL,
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
-  NODE_ENV: process.env.NODE_ENV 
+  NODE_ENV: process.env.NODE_ENV,
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 };
