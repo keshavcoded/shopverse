@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FolderLock, LogOut, LucideHome, ShoppingCart } from "lucide-react";
+import Tooltip from "./Tooltip";
 
 const Navbar = () => {
   const user = true;
@@ -12,37 +13,45 @@ const Navbar = () => {
         </Link>
 
         <nav className="flex flex-wrap items-center gap-4">
-          <Link to={"/"} className="">
-            <LucideHome
-              className="transition-transform duration-300 ease-in-out hover:scale-110"
-              size={25}
-            />
-          </Link>
-          {user && (
-            <Link to={"/cart"} className="relative group">
-              <ShoppingCart
-                className="inline-block mr-1 transition-transform duration-300 ease-in-out group-hover:scale-110"
+          <Tooltip text={"Home"}>
+            <Link to={"/"} className="">
+              <LucideHome
+                className="transition-transform duration-300 ease-in-out hover:scale-110"
                 size={25}
               />
-              <span className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2 py-0.5 text-xs transition-transform duration-300 ease-in-out group-hover:scale-110">
-                2
-              </span>
             </Link>
+          </Tooltip>
+          {user && (
+            <Tooltip text={"Cart"}>
+              <Link to={"/cart"} className="relative group">
+                <ShoppingCart
+                  className="inline-block mr-1 transition-transform duration-300 ease-in-out group-hover:scale-110"
+                  size={25}
+                />
+                <span className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2 py-0.5 text-xs transition-transform duration-300 ease-in-out group-hover:scale-110">
+                  2
+                </span>
+              </Link>
+            </Tooltip>
           )}
           {isAdmin && (
-            <Link className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 rounded-md transition duration-300 ease-in-out flex items-center">
-              <FolderLock
-                className="inline-block mr-1"
-                size={20}
-                color="#ffffff"
-              />
-              <span className="hidden sm:inline">Dashbord</span>
-            </Link>
+            <Tooltip text={"Admin Dashboard"}>
+              <Link className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 rounded-md transition duration-300 ease-in-out flex items-center">
+                <FolderLock
+                  className="inline-block mr-1"
+                  size={20}
+                  color="#ffffff"
+                />
+                <span className="hidden sm:inline">Dashbord</span>
+              </Link>
+            </Tooltip>
           )}
           {user ? (
-            <button className="cursor-pointer">
-              <LogOut size={25} />
-            </button>
+            <Tooltip text={"Signout"}>
+              <button className="cursor-pointer">
+                <LogOut size={25} />
+              </button>
+            </Tooltip>
           ) : (
             <button></button>
           )}
