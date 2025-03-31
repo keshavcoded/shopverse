@@ -20,32 +20,33 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-md shadow-xl z-40 transition-all duration-300 border-b border-gray-400">
+    <header className="fixed top-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-md shadow-xl z-40 transition-all duration-300">
       <div className="container mx-auto px-4 py-3 flex justify-between max-w-7xl">
         {/* Logo */}
         <Link to={"/"} className="items-center space-x-2 flex">
-          <img
-            src="/logo.png"
-            alt="logo"
-            className="w-30 sm:w-50 m-3 sm:h-10"
-          />
+          <img src="/logo.png" alt="logo" className="w-30 sm:w-40 m-3 sm:h-8" />
         </Link>
 
         {/* Desktop Navbar */}
-        <nav className="flex flex-wrap items-center gap-1 min-[410px]:gap-5">
+        <nav className="flex flex-wrap items-center gap-1 min-[440px]:gap-5">
           {/* Home */}
           <Tooltip text={"Home"}>
-            <Link to={"/"} className="">
-              <LucideHome className="transition-transform duration-300 ease-in-out hover:scale-110 w-5 h-7 sm:w-7 sm:h-9" />
+            <Link
+              to={"/"}
+              className="max-[300px]:hidden flex items-center group"
+            >
+              <LucideHome className="transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+              <span className="ml-2 inline">Home</span>
             </Link>
           </Tooltip>
 
           {/* Cart */}
           {user && (
             <Tooltip text={"Cart"}>
-              <Link to={"/cart"} className="relative group max-[410px]:hidden">
-                <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-7 sm:h-9" />
-                <span className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2 py-0.5 text-xs transition-transform duration-300 ease-in-out group-hover:scale-110">
+              <Link to={"/cart"} className="relative group max-[440px]:hidden">
+                <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+                <span className="ml-2 inline">Cart</span>
+                <span className="absolute -top-2 right-9 bg-black text-white rounded-full px-2 py-0.5 text-xs transition-transform duration-300 ease-in-out group-hover:scale-110">
                   2
                 </span>
               </Link>
@@ -55,9 +56,9 @@ const Navbar = () => {
           {/* Admin Dashboard */}
           {user && isAdmin && (
             <Tooltip text={"Admin Dashboard"}>
-              <Link className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 sm:py-1 rounded-md transition duration-300 ease-in-out flex items-center max-[410px]:hidden">
+              <Link className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 sm:py-1 rounded-md transition duration-300 ease-in-out flex items-center max-[440px]:hidden">
                 <FolderLock
-                  className="inline-block mr-1 w-5 h-7 sm:w-7 sm:h-9"
+                  className="inline-block mr-1 w-5 h-7 sm:w-6 sm:h-8"
                   color="#ffffff"
                 />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -68,21 +69,21 @@ const Navbar = () => {
           {/* Signout */}
           {user ? (
             <Tooltip text={"Signout"}>
-              <button className="cursor-pointer transition duration-300 ease-in-out hover:scale-110 max-[410px]:hidden">
-                <LogOut className="w-5 h-7 sm:w-7 sm:h-9" />
+              <button className="cursor-pointer transition duration-300 ease-in-out hover:scale-110 max-[440px]:hidden">
+                <LogOut className="w-5 h-7 sm:w-6 sm:h-8" />
               </button>
             </Tooltip>
           ) : (
             <>
               <Link
                 to={"/signin"}
-                className="text-center text-xs sm:text-base px-2 py-2 rounded-md hover:bg-gray-200 transition duration-300 ease-in-out max-[410px]:hidden"
+                className="text-center text-xs sm:text-base px-2 py-2 rounded-md hover:bg-gray-200 transition duration-300 ease-in-out max-[440px]:hidden"
               >
                 Sign In
               </Link>
               <Link
                 to={"/signup"}
-                className="bg-blue-600 text-white text-xs sm:text-base text-center px-2 py-2 rounded-md hover:bg-blue-800 transition duration-300 ease-in-out max-[410px]:hidden"
+                className="bg-blue-600 text-white text-xs sm:text-base text-center px-2 py-2 rounded-md hover:bg-blue-800 transition duration-300 ease-in-out max-[440px]:hidden"
               >
                 Signup
               </Link>
@@ -90,7 +91,7 @@ const Navbar = () => {
           )}
 
           {/* Mobile Menu Button */}
-          <div className="min-[410px]:hidden relative">
+          <div className="min-[440px]:hidden relative">
             <Menu
               size={24}
               className="cursor-pointer"
@@ -100,6 +101,14 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {mobileMenuActive && (
               <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-gray-300 shadow-lg rounded-md flex flex-col p-2 space-y-2 text-sm">
+                {/* Home */}
+                  <Link
+                    to={"/"}
+                    className="min-[300px]:hidden flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md"
+                  >
+                    <LucideHome className="transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+                    <span className="ml-2 inline">Home</span>
+                  </Link>
                 {/* Cart */}
                 {user && (
                   <Link
