@@ -9,9 +9,9 @@ import {
 import Tooltip from "./Tooltip";
 import { useState } from "react";
 
-const Navbarv2 = () => {
+const Navbar = () => {
   const user = true;
-  const isAdmin = false;
+  const isAdmin = true;
 
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
@@ -99,7 +99,7 @@ const Navbarv2 = () => {
 
             {/* Mobile Menu */}
             {mobileMenuActive && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-300 shadow-lg rounded-md flex flex-col p-2 space-y-2">
+              <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-gray-300 shadow-lg rounded-md flex flex-col p-2 space-y-2 text-sm">
                 {/* Cart */}
                 {user && (
                   <Link
@@ -159,4 +159,4 @@ const Navbarv2 = () => {
   );
 };
 
-export default Navbarv2;
+export default Navbar;
