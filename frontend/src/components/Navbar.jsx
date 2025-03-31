@@ -10,7 +10,7 @@ import Tooltip from "./Tooltip";
 import { useState } from "react";
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   const isAdmin = true;
 
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
@@ -77,13 +77,13 @@ const Navbar = () => {
             <>
               <Link
                 to={"/signin"}
-                className="text-center text-xs sm:text-base px-2 py-2 rounded-md hover:bg-gray-200 transition duration-300 ease-in-out max-[440px]:hidden"
+                className="text-center px-2 py-2 rounded-md hover:bg-gray-200 transition duration-300 ease-in-out max-[440px]:hidden"
               >
                 Sign In
               </Link>
               <Link
                 to={"/signup"}
-                className="bg-blue-600 text-white text-xs sm:text-base text-center px-2 py-2 rounded-md hover:bg-blue-800 transition duration-300 ease-in-out max-[440px]:hidden"
+                className="bg-blue-600 text-white text-center px-2 py-2 rounded-md hover:bg-blue-800 transition duration-300 ease-in-out max-[440px]:hidden"
               >
                 Signup
               </Link>
