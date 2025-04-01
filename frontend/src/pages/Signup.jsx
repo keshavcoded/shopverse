@@ -5,6 +5,7 @@ import { Keyboard, Lock, Mail, User2 } from "lucide-react";
 import { InputField } from "../components/InputFields";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/useAuth";
 
 const Signup = () => {
   const [inputFormData, setInputFormData] = useState({
@@ -14,11 +15,11 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const loading = false;
+  const { signup, isSigningUp } = useAuthStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputFormData);
+    signup(inputFormData);
   };
 
   return (
@@ -118,7 +119,7 @@ const Signup = () => {
               </div>
             </div>
             <Button
-              isLoading={loading}
+              isLoading={isSigningUp}
               text={"Signup"}
               loadingText={"Signing up..."}
             />
@@ -129,7 +130,7 @@ const Signup = () => {
               to={"/signin"}
               className="font-medium text-blue-600 hover:underline"
             >
-              Sign In 
+              Sign In
             </Link>
           </p>
         </div>

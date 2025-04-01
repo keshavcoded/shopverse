@@ -5,15 +5,17 @@ import { Lock, Mail } from "lucide-react";
 import { InputField } from "../components/InputFields";
 import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/useAuth";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loading = false;
+
+  const { signin, isSigningIn } = useAuthStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    signin({email, password});
   };
 
   return (
@@ -53,10 +55,7 @@ const Signin = () => {
             <div>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock
-                    className="h-5 w-5 text-gray-600"
-                    aria-hidden="true"
-                  />
+                  <Lock className="h-5 w-5 text-gray-600" aria-hidden="true" />
                 </div>
                 <InputField
                   id={"password"}
@@ -68,7 +67,7 @@ const Signin = () => {
               </div>
             </div>
             <Button
-              isLoading={loading}
+              isLoading={isSigningIn}
               text={"Sign In"}
               loadingText={"Signing in..."}
             />
