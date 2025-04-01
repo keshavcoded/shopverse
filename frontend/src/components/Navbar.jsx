@@ -8,15 +8,21 @@ import {
 } from "lucide-react";
 import Tooltip from "./Tooltip";
 import { useState } from "react";
+import { useAuthStore } from "../store/useAuth";
 
 const Navbar = () => {
-  const user = false;
-  const isAdmin = true;
+  const { user, signout } = useAuthStore();
+  const isAdmin = user?.role === "admin";
 
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
   const mobileMenuActiveToggler = () => {
     setMobileMenuActive(!mobileMenuActive);
+  };
+
+  const handleClick = () => {
+    signout();
+    mobileMenuActiveToggler();
   };
 
   return (
@@ -33,9 +39,9 @@ const Navbar = () => {
           <Tooltip text={"Home"}>
             <Link
               to={"/"}
-              className="max-[300px]:hidden flex items-center group"
+              className="max-[300px]:hidden flex items-center group group-hover:scale-110 transition-transform duration-300 ease-in-out"
             >
-              <LucideHome className="transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+              <LucideHome className="w-5 h-7 sm:w-6 sm:h-8" />
               <span className="ml-2 inline">Home</span>
             </Link>
           </Tooltip>
@@ -43,10 +49,13 @@ const Navbar = () => {
           {/* Cart */}
           {user && (
             <Tooltip text={"Cart"}>
-              <Link to={"/cart"} className="relative group max-[440px]:hidden">
-                <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+              <Link
+                to={"/cart"}
+                className="max-[440px]:hidden relative flex items-center transition-transform duration-300 ease-in-out hover:scale-110"
+              >
+                <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out w-5 h-7 sm:w-6 sm:h-8" />
                 <span className="ml-2 inline">Cart</span>
-                <span className="absolute -top-2 right-9 bg-black text-white rounded-full px-2 py-0.5 text-xs transition-transform duration-300 ease-in-out group-hover:scale-110">
+                <span className="absolute -top-0.5 sm:-top-1 right-10 sm:right-9 bg-blue-500 text-white rounded-full px-1 sm:px-2 sm:py-0.5 text-xs transition-transform duration-300 ease-in-out">
                   2
                 </span>
               </Link>
@@ -69,8 +78,12 @@ const Navbar = () => {
           {/* Signout */}
           {user ? (
             <Tooltip text={"Signout"}>
-              <button className="cursor-pointer transition duration-300 ease-in-out hover:scale-110 max-[440px]:hidden">
+              <button
+                className="cursor-pointer flex items-center gap-1 transition duration-300 ease-in-out hover:scale-110 max-[440px]:hidden"
+                onClick={signout}
+              >
                 <LogOut className="w-5 h-7 sm:w-6 sm:h-8" />
+                <span className="hidden sm:inline">Logout</span>
               </button>
             </Tooltip>
           ) : (
@@ -102,13 +115,13 @@ const Navbar = () => {
             {mobileMenuActive && (
               <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-gray-300 shadow-lg rounded-md flex flex-col p-2 space-y-2 text-sm">
                 {/* Home */}
-                  <Link
-                    to={"/"}
-                    className="min-[300px]:hidden flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md"
-                  >
-                    <LucideHome className="transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
-                    <span className="ml-2 inline">Home</span>
-                  </Link>
+                <Link
+                  to={"/"}
+                  className="min-[300px]:hidden flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md"
+                >
+                  <LucideHome className="transition-transform duration-300 ease-in-out group-hover:scale-110 w-5 h-7 sm:w-6 sm:h-8" />
+                  <span className="ml-2 inline">Home</span>
+                </Link>
                 {/* Cart */}
                 {user && (
                   <Link
@@ -136,7 +149,7 @@ const Navbar = () => {
                 {user ? (
                   <button
                     className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md"
-                    onClick={mobileMenuActiveToggler}
+                    onClick={handleClick}
                   >
                     <LogOut className="w-5 h-7" />
                     <span>Sign Out</span>
