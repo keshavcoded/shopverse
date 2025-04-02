@@ -13,7 +13,6 @@ import { useAuthStore } from "../store/useAuth";
 const Navbar = () => {
   const { user, signout } = useAuthStore();
   const isAdmin = user?.role === "admin";
-
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
   const mobileMenuActiveToggler = () => {
