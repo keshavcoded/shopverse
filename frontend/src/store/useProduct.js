@@ -6,6 +6,7 @@ export const useProductStore = create((set) => {
   return {
     products: [],
     isAdding: false,
+    isFetching: false,
 
     setProducts: (products) => set({ products }),
 
@@ -25,5 +26,19 @@ export const useProductStore = create((set) => {
         set({ isAdding: false });
       }
     },
+
+    fetchProducts: async () => {
+      set({ isFetching: true });
+      try {
+        const res = await axiosInstance.get("/products");
+        set({ products: res.data.products, isFetching: false });
+      } catch (error) {
+        console.log("Error while fetching", error.message);
+        toast.error("Oops! Error while fetching products");
+        set({ isFetching: false });
+      }
+    },
+
+    deleteProduct: async (id) => {},
   };
 });
