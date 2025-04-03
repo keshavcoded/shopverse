@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/useAuth";
 import { useEffect } from "react";
 import Loader from "./components/Loader";
+import Admin from "./pages/Admin";
 
 function App() {
   const { user, authUserCheck, isCheckingAuth } = useAuthStore();
@@ -32,6 +33,10 @@ function App() {
           <Route
             path="/signin"
             element={!user ? <Signin /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/admin-dashboard"
+            element={user?.role === "admin" ? <Admin /> : <Navigate to={"/signin"} />}
           />
         </Routes>
       </div>
