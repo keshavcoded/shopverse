@@ -13,6 +13,8 @@ import { useAuthStore } from "../store/useAuth";
 const Navbar = () => {
   const { user, signout } = useAuthStore();
   const isAdmin = user?.role === "admin";
+  console.log(user?.role)
+  console.log(isAdmin);
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
   const mobileMenuActiveToggler = () => {
@@ -64,7 +66,10 @@ const Navbar = () => {
           {/* Admin Dashboard */}
           {user && isAdmin && (
             <Tooltip text={"Admin Dashboard"}>
-              <Link className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 sm:py-1 rounded-md transition duration-300 ease-in-out flex items-center max-[440px]:hidden">
+              <Link
+                to={"/admin-dashboard"}
+                className="bg-blue-600 text-white hover:bg-blue-800 px-2 py-1 sm:py-1 rounded-md transition duration-300 ease-in-out flex items-center max-[440px]:hidden"
+              >
                 <FolderLock
                   className="inline-block mr-1 w-5 h-7 sm:w-6 sm:h-8"
                   color="#ffffff"
@@ -136,6 +141,7 @@ const Navbar = () => {
                 {/* Admin Dashboard */}
                 {user && isAdmin && (
                   <Link
+                    to={"/admin-dashboard"}
                     className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md bg-blue-600 text-white"
                     onClick={mobileMenuActiveToggler}
                   >
