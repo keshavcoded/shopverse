@@ -1,10 +1,11 @@
 import { BarChart3, PlusSquare, ShoppingBag } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AddProduct from "../components/AddProduct";
 import Products from "../components/Products";
 import Analytics from "../components/Analytics";
+import { useProductStore } from "../store/useProduct";
 
 const tabs = [
   { id: "create", label: "Add Product", icon: PlusSquare },
@@ -14,6 +15,12 @@ const tabs = [
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("create");
+
+  const { fetchProducts } = useProductStore();
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -26,7 +33,7 @@ const Admin = () => {
         >
           Admin Dashboard
         </motion.h1>
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-1">
           {tabs.map((tab) => {
             return (
               <button
