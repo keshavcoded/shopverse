@@ -5,12 +5,13 @@ import CategoryItem from "../components/CategoryItem";
 const categories = [
   { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
   { href: "/t-shirts", name: "T-shirts", imageUrl: "/tees.jpg" },
-  { href: "/shoes", name: "Shoes", imageUrl: "/shoes.jpg" },
+  { href: "/shirts", name: "Shirts", imageUrl: "/shirts.jpg" },
+  { href: "/shoes", name: "Shoes", imageUrl: "/shoes2.jpg" },
   { href: "/glasses", name: "Glasses", imageUrl: "/sunglasses.jpg" },
   { href: "/jackets", name: "Jackets", imageUrl: "/jacket.jpg" },
   { href: "/hoodies", name: "Hoodies", imageUrl: "/hoodies.png" },
   { href: "/suits", name: "Suits", imageUrl: "/suits.jpg" },
-  { href: "/shirts", name: "Shirts", imageUrl: "/shirts.jpg" },
+  
   
 
 ];
