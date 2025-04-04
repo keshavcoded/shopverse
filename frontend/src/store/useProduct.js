@@ -7,6 +7,7 @@ export const useProductStore = create((set) => {
     products: [],
     isAdding: false,
     isFetching: false,
+    isToggling: false,
 
     setProducts: (products) => set({ products }),
 
@@ -39,6 +40,24 @@ export const useProductStore = create((set) => {
       }
     },
 
-    deleteProduct: async (id) => {},
+    toggleFeaturedProduct: async (productId) => {
+      set({ isToggling: true });
+      try {
+        const res = await axiosInstance.patch(`/products/${productId}`);
+        set((prevProductsState) => ({
+          products: prevProductsState.products.map((product) =>
+            product._id === productId
+              ? { ...product, isFeatured: res.data.updatedProduct.isFeatured }
+              : product
+          ),
+          isToggling: false,
+        }));
+      } catch (error) {
+        set({ isToggling: false });
+        toast.error(error.response.data.error || "Failed to update product");
+      }
+    },
+
+    deleteProduct: async () => {},
   };
 });

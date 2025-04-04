@@ -4,9 +4,8 @@ import { useProductStore } from "../store/useProduct";
 import { motion } from "framer-motion";
 
 const Products = () => {
-  const { products, deleteProduct } = useProductStore();
+  const { products, toggleFeaturedProduct, deleteProduct } = useProductStore();
   console.log(products);
-
   return (
     <motion.div
       className="shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto mt-10"
@@ -85,10 +84,11 @@ const Products = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button
+                    onClick={() => toggleFeaturedProduct(product._id)}
                     className={`p-1 rounded-full ${
                       product.isFeatured
-                        ? "bg-yellow-400 text-gray-600"
-                        : "bg-gray-600 text-gray-300"
+                        ? "bg-yellow-400 text-gray-700"
+                        : "bg-gray-200 text-gray-700"
                     } hover:bg-yellow-500 transition-colors duration-200 cursor-pointer`}
                   >
                     <Star className="h-5 w-5" />
