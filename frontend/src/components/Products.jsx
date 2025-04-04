@@ -2,10 +2,19 @@ import { Star, Trash } from "lucide-react";
 import { useProductStore } from "../store/useProduct";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Products = () => {
+  
+  const { fetchProducts } = useProductStore();
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
   const { products, toggleFeaturedProduct, deleteProduct } = useProductStore();
   console.log(products);
+
   return (
     <motion.div
       className="shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto mt-10"
@@ -73,9 +82,7 @@ const Products = () => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-700">
-                    ${product.price.toFixed(2)}
-                  </div>
+                  <div className="text-sm text-gray-700">${product.price}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-700">

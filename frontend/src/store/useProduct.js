@@ -8,6 +8,7 @@ export const useProductStore = create((set) => {
     isAdding: false,
     isFetching: false,
     isToggling: false,
+    isDeleting: false,
 
     setProducts: (products) => set({ products }),
 
@@ -58,6 +59,22 @@ export const useProductStore = create((set) => {
       }
     },
 
-    deleteProduct: async () => {},
+    deleteProduct: async (productId) => {
+      set({ isDeleting: false });
+      try {
+        await axiosInstance.delete(`/products/${productId}`);
+        set((prevProductsState) => ({
+          products: prevProductsState.products.filter(
+            (product) => product._id !== productId
+          ),
+          isDeleting: false,
+        }));
+      } catch (error) {
+        set({ isDeleting: false });
+        toast.error(
+          error.response.data.error || "Error while deleting product"
+        );
+      }
+    },
   };
 });
