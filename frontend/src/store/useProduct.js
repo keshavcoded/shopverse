@@ -76,5 +76,17 @@ export const useProductStore = create((set) => {
         );
       }
     },
+
+    fetchProductsByCategory: async (category) => {
+      set({ isFetching: true });
+      try {
+        const res = await axiosInstance.get(`/products/category/${category}`);
+        set({ products: res.data.categoryProducts, isFetching: false });
+      } catch (error) {
+        toast.error("Error while fetching products");
+        set({ isFetching: false });
+        console.log(error.message);
+      }
+    },
   };
 });
