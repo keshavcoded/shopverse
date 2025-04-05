@@ -8,6 +8,7 @@ import { useAuthStore } from "./store/useAuth";
 import { useEffect } from "react";
 import Loader from "./components/Loader";
 import Admin from "./pages/Admin";
+import Category from "./pages/Category";
 
 function App() {
   const { user, authUserCheck, isCheckingAuth } = useAuthStore();
@@ -36,8 +37,11 @@ function App() {
           />
           <Route
             path="/admin-dashboard"
-            element={user?.role === "admin" ? <Admin /> : <Navigate to={"/signin"} />}
+            element={
+              user?.role === "admin" ? <Admin /> : <Navigate to={"/signin"} />
+            }
           />
+          <Route path="/category/:category" element={<Category />} />
         </Routes>
       </div>
       <Toaster
