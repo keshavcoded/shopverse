@@ -3,17 +3,14 @@ import { motion } from "framer-motion";
 import CategoryItem from "../components/CategoryItem";
 
 const categories = [
-  { href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
-  { href: "/t-shirts", name: "T-shirts", imageUrl: "/tees.jpg" },
-  { href: "/shirts", name: "Shirts", imageUrl: "/shirts.jpg" },
-  { href: "/shoes", name: "Shoes", imageUrl: "/shoes2.jpg" },
-  { href: "/glasses", name: "Glasses", imageUrl: "/sunglasses.jpg" },
-  { href: "/jackets", name: "Jackets", imageUrl: "/jacket.jpg" },
-  { href: "/hoodies", name: "Hoodies", imageUrl: "/hoodies.png" },
-  { href: "/suits", name: "Suits", imageUrl: "/suits.jpg" },
-  
-  
-
+  { href: "/Jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
+  { href: "/T-shirts", name: "T-shirts", imageUrl: "/tees.jpg" },
+  { href: "/Shirts", name: "Shirts", imageUrl: "/shirts.jpg" },
+  { href: "/Shoes", name: "Shoes", imageUrl: "/shoes2.jpg" },
+  { href: "/Glasses", name: "Glasses", imageUrl: "/sunglasses.jpg" },
+  { href: "/Jackets", name: "Jackets", imageUrl: "/jacket.jpg" },
+  { href: "/Hoodies", name: "Hoodies", imageUrl: "/hoodies.png" },
+  { href: "/Suits", name: "Suits", imageUrl: "/suits.jpg" },
 ];
 
 const Home = () => {
