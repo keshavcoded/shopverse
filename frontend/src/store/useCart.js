@@ -1,0 +1,64 @@
+import { create } from "zustand";
+import axiosInstance from "../utils/axios";
+import toast from "react-hot-toast";
+
+export const useCartStore = create((set, get) => {
+  return {
+    cart: [],
+    voucher: null,
+    total: 0,
+    subtotal: 0,
+
+    getCart: async () => {
+      try {
+        const res = await axiosInstance.get("/cart");
+        set({ cart: res.data.cartItems });
+        get().calculateTotal();
+      } catch (error) {
+        set({ cart: [] });
+        toast.error("An error occured");
+        console.log(error.message);
+      }
+    },
+
+    addToCart: async (product) => {
+      try {
+        await axiosInstance.post("/cart", { productId: product._id });
+        toast.success("Added to cart");
+        set((prevState) => {
+          const existingItem = prevState.cart.find(
+            (item) => item._id === product._id
+          );
+          const updatedCart = existingItem
+            ? prevState.cart.map((item) =>
+                item._id === product._id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              )
+            : [...prevState.cart, { ...product, quantity: 1 }];
+          return { cart: updatedCart };
+        });
+        get().calculateTotal();
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Error while adding to cart");
+      }
+    },
+
+    calculateTotal: () => {
+      const { cart, voucher } = get();
+      const subtotal = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+      let total = subtotal;
+
+      if (voucher) {
+        const discount = subtotal * (voucher.discountPercent / 100);
+        total = subtotal - discount;
+      }
+
+      set({ subtotal, total });
+    },
+  };
+});
