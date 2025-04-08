@@ -9,13 +9,20 @@ import { useEffect } from "react";
 import Loader from "./components/Loader";
 import Admin from "./pages/Admin";
 import Category from "./pages/Category";
+import Cart from "./pages/Cart";
+import { useCartStore } from "./store/useCart";
 
 function App() {
   const { user, authUserCheck, isCheckingAuth } = useAuthStore();
+  const { getCart } = useCartStore();
 
   useEffect(() => {
     authUserCheck();
   }, [authUserCheck]);
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
 
   if (isCheckingAuth) {
     return <Loader />;
@@ -42,6 +49,10 @@ function App() {
             }
           />
           <Route path="/category/:category" element={<Category />} />
+          <Route
+            path="/cart"
+            element={user ? <Cart /> : <Navigate to={"/signin"} />}
+          />
         </Routes>
       </div>
       <Toaster

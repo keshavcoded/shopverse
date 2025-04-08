@@ -2,10 +2,12 @@ import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useCartStore } from "../store/useCart";
 
 const ItemCard = ({ product }) => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const { addToCart } = useCartStore();
 
   const handleCartClick = () => {
     if (!user) {
@@ -14,7 +16,7 @@ const ItemCard = ({ product }) => {
       });
       navigate("/signin");
     } else {
-      toast.success("Added to cart");
+      addToCart(product);
     }
   };
   return (

@@ -9,12 +9,15 @@ import {
 import Tooltip from "./Tooltip";
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuth";
+import { useCartStore } from "../store/useCart";
 
 const Navbar = () => {
   const { user, signout } = useAuthStore();
   const isAdmin = user?.role === "admin";
-  console.log(user?.role)
+  console.log(user?.role);
   console.log(isAdmin);
+
+  const { cart } = useCartStore();
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
   const mobileMenuActiveToggler = () => {
@@ -56,9 +59,11 @@ const Navbar = () => {
               >
                 <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out w-5 h-7 sm:w-6 sm:h-8" />
                 <span className="ml-2 inline">Cart</span>
-                <span className="absolute -top-0.5 sm:-top-1 right-10 sm:right-9 bg-blue-500 text-white rounded-full px-1 sm:px-2 sm:py-0.5 text-xs transition-transform duration-300 ease-in-out">
-                  2
-                </span>
+                {cart.length > 0 && (
+                  <span className="absolute -top-0.5 sm:-top-1 right-10 sm:right-9 bg-blue-500 text-white rounded-full px-1 sm:px-2 sm:py-0.5 text-xs transition-transform duration-300 ease-in-out">
+                    {cart.length}
+                  </span>
+                )}
               </Link>
             </Tooltip>
           )}
@@ -134,7 +139,7 @@ const Navbar = () => {
                     onClick={mobileMenuActiveToggler}
                   >
                     <ShoppingCart className="w-5 h-7" />
-                    <span>Cart (2)</span>
+                    <span>Cart ({cart.length})</span>
                   </Link>
                 )}
 
