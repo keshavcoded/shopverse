@@ -9,6 +9,7 @@ export const useProductStore = create((set) => {
     isFetching: false,
     isToggling: false,
     isDeleting: false,
+    topPicks: [],
 
     setProducts: (products) => set({ products }),
 
@@ -85,6 +86,16 @@ export const useProductStore = create((set) => {
       } catch (error) {
         toast.error("Error while fetching products");
         set({ isFetching: false });
+        console.log(error.message);
+      }
+    },
+
+    fetchTopPicks: async () => {
+      set({ isFetching: true });
+      try {
+        const res = await axiosInstance.get("/products/picks-for-you");
+        set({ topPicks: res.data.recommendedProducts, isFetching: false });
+      } catch (error) {
         console.log(error.message);
       }
     },

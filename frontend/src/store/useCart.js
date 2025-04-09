@@ -8,6 +8,7 @@ export const useCartStore = create((set, get) => {
     voucher: null,
     total: 0,
     subtotal: 0,
+    isVoucherApplied: false,
 
     getCart: async () => {
       try {
