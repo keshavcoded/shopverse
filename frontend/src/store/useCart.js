@@ -16,7 +16,6 @@ export const useCartStore = create((set, get) => {
         get().calculateTotal();
       } catch (error) {
         set({ cart: [] });
-        toast.error("An error occured");
         console.log(error.message);
       }
     },
@@ -42,6 +41,18 @@ export const useCartStore = create((set, get) => {
       } catch (error) {
         console.log(error.message);
         toast.error("Error while adding to cart");
+      }
+    },
+
+    removeFromCart: async (productId) => {
+      try {
+        await axiosInstance.delete("/cart", { data: { productId } });
+        set((prevState) => ({
+          cart: prevState.cart.filter((item) => item._id !== productId),
+        }));
+        get().calculateTotal();
+      } catch (error) {
+        console.log(error.message);
       }
     },
 
