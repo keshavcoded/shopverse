@@ -2,7 +2,7 @@ import { Minus, Plus } from "lucide-react";
 import { useCartStore } from "../store/useCart";
 
 const CartItem = ({ item }) => {
-  const { removeFromCart } = useCartStore();
+  const { removeFromCart, updateQuantity } = useCartStore();
   return (
     <div className="rounded-lg border p-4 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-gray-100 bg-gray-100 md:p-6">
       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
@@ -12,11 +12,17 @@ const CartItem = ({ item }) => {
         <label className="sr-only">Choose Quantity</label>
         <div className="flex items-center justify-between md:order-3 md:justify-end">
           <div className="flex items-center gap-2">
-            <button className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-400 hover:bg-gray-300 transition-color duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-500">
+            <button
+              className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-400 hover:bg-gray-300 transition-color duration-200 cursor-pointer focus:outline-none focus:ring-1 focus:ring-gray-400"
+              onClick={() => updateQuantity(item._id, item.quantity - 1)}
+            >
               <Minus className="text-gray-500" />
             </button>
             <p>{item.quantity}</p>
-            <button className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-400 hover:bg-gray-300 transition-color duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-500">
+            <button
+              className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-400 hover:bg-gray-300 transition-color duration-200 cursor-pointer focus:outline-none focus:ring-1 focus:ring-gray-400"
+              onClick={() => updateQuantity(item._id, item.quantity + 1)}
+            >
               <Plus className="text-gray-500" />
             </button>
           </div>

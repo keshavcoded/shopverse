@@ -56,6 +56,25 @@ export const useCartStore = create((set, get) => {
       }
     },
 
+    updateQuantity: async (productId, quantity) => {
+      try {
+        if (quantity === 0) {
+          get().removeFromCart(productId);
+          return;
+        }
+
+        await axiosInstance.put(`/cart/${productId}`, { quantity });
+        set((prevState) => ({
+          cart: prevState.cart.map((item) =>
+            item._id === productId ? { ...item, quantity } : item
+          ),
+        }));
+        get().calculateTotal();
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
     calculateTotal: () => {
       const { cart, voucher } = get();
       const subtotal = cart.reduce(
