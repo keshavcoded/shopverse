@@ -5,7 +5,7 @@ export const addToCart = async (req, res) => {
     const { productId } = req.body;
     const user = req.user;
 
-    const existingItem = user.cartItems.find((item) => (item.id === productId));
+    const existingItem = user.cartItems.find((item) => item.id === productId);
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
@@ -53,7 +53,7 @@ export const updateQuantity = async (req, res) => {
     const user = req.user;
     const { quantity } = req.body;
 
-    const existingItem = await user.cartItems.filter(
+    const existingItem = await user.cartItems.find(
       (item) => item.id === productId
     );
 
@@ -61,7 +61,9 @@ export const updateQuantity = async (req, res) => {
       if (quantity === 0) {
         user.cartItems = user.cartItems.filter((item) => item.id !== productId);
         await user.save();
-        return res.status.json({ success: true, cartItems: user.cartItems });
+        return res
+          .status(200)
+          .json({ success: true, cartItems: user.cartItems });
       } else {
         existingItem.quantity = quantity;
         await user.save();
