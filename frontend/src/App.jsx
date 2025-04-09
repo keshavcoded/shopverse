@@ -21,8 +21,9 @@ function App() {
   }, [authUserCheck]);
 
   useEffect(() => {
+    if (!user) return;
     getCart();
-  }, [user,getCart]);
+  }, [user, getCart]);
 
   if (isCheckingAuth) {
     return <Loader />;
