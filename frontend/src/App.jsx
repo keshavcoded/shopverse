@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     getCart();
-  }, [getCart]);
+  }, [user,getCart]);
 
   if (isCheckingAuth) {
     return <Loader />;
