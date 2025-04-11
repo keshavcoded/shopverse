@@ -72,7 +72,7 @@ export const createTransactionSession = async (req, res) => {
           ]
         : [],
       metadata: {
-        userID: req.user._id,
+        userID: req.user._id.toString(),
         voucherCode: voucherCode || "",
         products: JSON.stringify(
           products.map((product) => {
