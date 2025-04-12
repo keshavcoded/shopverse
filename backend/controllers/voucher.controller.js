@@ -4,7 +4,7 @@ export const getVoucher = async (req, res) => {
   try {
     const userID = req.user._id;
     const voucher = await Voucher.find({ userID: userID, isActive: true });
-    if (!voucher) {
+    if (!voucher || voucher.length === 0) {
       return res.status(404).json({
         success: true,
         message: "No voucher found",
