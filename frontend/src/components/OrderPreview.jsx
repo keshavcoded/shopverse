@@ -3,15 +3,37 @@ import { motion } from "framer-motion";
 import { useCartStore } from "../store/useCart";
 import { Link } from "react-router-dom";
 import { MoveUpRight } from "lucide-react";
+import { stripePromise } from "../utils/stripe";
+import axiosInstance from "../utils/axios";
 
 const OrderPreview = () => {
-  const { total, subtotal, voucher, isVoucherApplied } = useCartStore();
+  const { total, subtotal, voucher, isVoucherApplied, cart } = useCartStore();
 
   const discount = subtotal - total;
 
   const formattedSubtotal = subtotal.toFixed(2);
   const formattedTotal = total.toFixed(2);
   const formattedDiscount = discount.toFixed(2);
+
+  const handleInitatePayment = async () => {
+    const stripe = await stripePromise;
+    const res = await axiosInstance.post(
+      "/payments/initiate-session-transaction",
+      {
+        products: cart,
+        voucher: voucher ? voucher.code : null,
+      }
+    );
+
+    const session = res.data;
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log("Error: ", result.error);
+    }
+  };
 
   return (
     <motion.div
@@ -57,14 +79,17 @@ const OrderPreview = () => {
           </dl>
         </div>
         <motion.button
-          className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium cursor-pointer text-white hover:bg-blue-700 focus:outline focus:ring-4 focus:ring-gray-800"
+          className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium cursor-pointer text-white hover:bg-blue-700 focus:outline focus:ring-3s focus:ring-blue-700"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handleInitatePayment}
         >
           Proceed to Checkout
         </motion.button>
         <div className="flex items-center justify-center gap-2">
-          <span className="text-sm font-normal text-gray-500">Forgot something?</span>
+          <span className="text-sm font-normal text-gray-500">
+            Forgot something?
+          </span>
           <Link
             to={"/"}
             className="inline-flex items-center gap-1 text-sm font-medium text-gray-900 underline hover:text-gray-600 hover:no-underline"

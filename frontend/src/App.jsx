@@ -11,6 +11,8 @@ import Admin from "./pages/Admin";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
 import { useCartStore } from "./store/useCart";
+import OrderSuccess from "./pages/OrderSuccess";
+import OrderFailed from "./pages/OrderFailed";
 
 function App() {
   const { user, authUserCheck, isCheckingAuth } = useAuthStore();
@@ -53,6 +55,14 @@ function App() {
           <Route
             path="/cart"
             element={user ? <Cart /> : <Navigate to={"/signin"} />}
+          />
+          <Route
+            path="/purchase-success"
+            element={user ? <OrderSuccess /> : <Navigate to={"/signin"} />}
+          />
+          <Route
+            path="/purchase-cancel"
+            element={user ? <OrderFailed /> : <Navigate to={"/signin"} />}
           />
         </Routes>
       </div>
