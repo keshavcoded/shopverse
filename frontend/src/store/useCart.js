@@ -91,5 +91,14 @@ export const useCartStore = create((set, get) => {
 
       set({ subtotal, total });
     },
+
+    clearCart: async () => {
+      try {
+        await axiosInstance.delete("/cart");
+        set({ cart: [], voucher: null, total: 0, subtotal: 0 });
+      } catch (error) {
+        toast.error(error.response.data.message || "An error occurred");
+      }
+    },
   };
 });
