@@ -13,7 +13,7 @@ const voucherSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     discountPercent: {
       type: Number,
