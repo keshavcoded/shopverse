@@ -1,3 +1,5 @@
+import Voucher from "../models/voucher.model.js";
+
 export const createStripeVoucher = async (discountPercent) => {
   const voucher = await stripeSession.coupons.create({
     percent_off: discountPercent,
