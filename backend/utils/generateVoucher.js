@@ -1,5 +1,5 @@
 import Voucher from "../models/voucher.model.js";
-
+import { stripeSession } from "../configs/stripe.js";
 export const createStripeVoucher = async (discountPercent) => {
   const voucher = await stripeSession.coupons.create({
     percent_off: discountPercent,
@@ -9,6 +9,7 @@ export const createStripeVoucher = async (discountPercent) => {
 };
 
 export const createVoucher = async (userId) => {
+  await Voucher.findOneAndDelete({ userID: userId, isActive: false });
   const newVoucher = new Voucher({
     code: "BIGDEAL" + Math.random().toString(36).substring(2, 8).toUpperCase(),
     discountPercent: 10,
