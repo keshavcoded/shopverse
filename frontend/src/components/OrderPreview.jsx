@@ -21,7 +21,7 @@ const OrderPreview = () => {
       "/payments/initiate-session-transaction",
       {
         products: cart,
-        voucher: voucher ? voucher.code : null,
+        voucherCode: voucher ? voucher.code : null,
       }
     );
 
@@ -63,11 +63,11 @@ const OrderPreview = () => {
           )}
           {voucher && isVoucherApplied && (
             <dl className="flex items-center justify-between gap-4">
-              <dt className="text-base font-normal text-gray-700">
+              <dt className="text-base font-normal text-green-600">
                 Voucher ({voucher.code})
               </dt>
-              <dt className="text-base font-medium text-gray-800">
-                -{voucher.discountPercent}
+              <dt className="text-base font-medium text-green-600">
+                -{voucher.discountPercent}%
               </dt>
             </dl>
           )}

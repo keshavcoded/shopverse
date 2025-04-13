@@ -6,6 +6,7 @@ export const useCartStore = create((set, get) => {
   return {
     cart: [],
     voucher: null,
+    vouchers: [],
     total: 0,
     subtotal: 0,
     isVoucherApplied: false,
@@ -99,6 +100,39 @@ export const useCartStore = create((set, get) => {
       } catch (error) {
         toast.error(error.response.data.message || "An error occurred");
       }
+    },
+
+    getVoucher: async () => {
+      try {
+        const res = await axiosInstance.get("/vouchers");
+        const voucherData = res.data.voucher;
+        if (Array.isArray(voucherData)) {
+          set({ vouchers: voucherData });
+        } else {
+          set({ voucher: voucherData });
+        }
+      } catch (error) {
+        console.log("Error while fetching data", error);
+      }
+    },
+
+    applyVoucher: async (code) => {
+      try {
+        const res = await axiosInstance.post("/vouchers/validate", { code });
+        set({ voucher: res.data, isVoucherApplied: true });
+        get().calculateTotal();
+        toast.success("Voucher applied successfully");
+      } catch (error) {
+        toast.error(
+          error.response?.data?.message || "Error while applying voucher"
+        );
+      }
+    },
+
+    removeVoucher: async () => {
+      set({ voucher: null, isVoucherApplied: false });
+      get().calculateTotal();
+      toast.success("Voucher removed");
     },
   };
 });
