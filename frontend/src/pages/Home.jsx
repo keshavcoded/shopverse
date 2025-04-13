@@ -29,9 +29,9 @@ const Home = () => {
           loading="eager"
           draggable="false"
         />
-        <h2 className="absolute top-4 left-4 sm:top-40 sm:left-8 text-gray-800 text-2xl sm:text-3xl lg:text-4xl xl:text-5xl max-w-[1240px] font-semibold z-10 px-3 py-2 rounded-md">
-          Life isn’t perfect,
-          <span className="block">but your outfit can be.</span>
+        <h2 className="absolute top-4 left-4 sm:top-40 sm:left-8 text-gray-700 text-2xl sm:text-3xl lg:text-4xl xl:text-5xl max-w-[1240px] font-bold z-10 px-3 py-2 rounded-md">
+          Find modern looks
+          <span className="block">for the modern you.</span>
         </h2>
       </motion.div>
 
