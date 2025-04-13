@@ -13,7 +13,7 @@ export const createTransactionSession = async (req, res) => {
 
     if (!Array.isArray(products) || products.length === 0) {
       return (
-        res.status(400),
+        res.status(400).
         json({
           success: false,
           message: "Invalid or null products array",
@@ -67,7 +67,7 @@ export const createTransactionSession = async (req, res) => {
       discounts: voucher
         ? [
             {
-              voucher: await createStripeVoucher(voucher.discountPercent),
+              coupon: await createStripeVoucher(voucher.discountPercent),
             },
           ]
         : [],
@@ -98,7 +98,7 @@ export const createTransactionSession = async (req, res) => {
   } catch (error) {
     console.log(
       "Error in createTransationSession controller : ",
-      error.message
+      error
     );
     return res.status(500).json({
       success: false,
