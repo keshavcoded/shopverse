@@ -9,6 +9,7 @@ export const useProductStore = create((set) => {
     isFetching: false,
     isToggling: false,
     isDeleting: false,
+    isFetchingFeat: false,
     topPicks: [],
 
     setProducts: (products) => set({ products }),
@@ -97,6 +98,18 @@ export const useProductStore = create((set) => {
         set({ topPicks: res.data.recommendedProducts, isFetching: false });
       } catch (error) {
         console.log(error.message);
+      }
+    },
+
+    fetchFeaturedProducts: async () => {
+      set({ isFetchingFeat: true });
+      try {
+        const res = await axiosInstance.get("/products/featured");
+        console.log("Featured response: ", res);
+        set({ products: res.data, isFetchingFeat: false });
+      } catch (error) {
+        console.log("Error while fetching featured products", error);
+        set({ isFetchingFeat: false });
       }
     },
   };
