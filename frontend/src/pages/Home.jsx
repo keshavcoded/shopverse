@@ -1,6 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import CategoryItem from "../components/CategoryItem";
+import { useProductStore } from "../store/useProduct";
+import { useEffect } from "react";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
   { href: "/Jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
@@ -14,6 +17,14 @@ const categories = [
 ];
 
 const Home = () => {
+  const { fetchFeaturedProducts, products, isFetchingFeat } = useProductStore();
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, [fetchFeaturedProducts]);
+
+  console.log("Featured : ", products);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       <motion.div
@@ -52,6 +63,9 @@ const Home = () => {
             <CategoryItem category={category} key={category.name} />
           ))}
         </div>
+        {!isFetchingFeat && products?.length > 0 && (
+          <FeaturedProducts featuredProducts={products} />
+        )}
       </motion.div>
     </div>
   );

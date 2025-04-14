@@ -13,7 +13,6 @@ const Products = () => {
   }, [fetchProducts]);
 
   const { products, toggleFeaturedProduct, deleteProduct } = useProductStore();
-  console.log(products);
 
   return (
     <motion.div
