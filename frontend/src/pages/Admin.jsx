@@ -1,11 +1,10 @@
 import { BarChart3, PlusSquare, ShoppingBag } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AddProduct from "../components/AddProduct";
 import Products from "../components/Products";
 import Analytics from "../components/Analytics";
-
 const tabs = [
   { id: "create", label: "Add Product", icon: PlusSquare },
   { id: "products", label: "Products", icon: ShoppingBag },
@@ -14,6 +13,26 @@ const tabs = [
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("create");
+  const [ismaxScreenLimit, setIsMaxScreenLimit] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsMaxScreenLimit(window.innerWidth < 776);
+    };
+
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
+  if (ismaxScreenLimit) {
+    return (
+      <div className="h-screen px-4 flex justify-center items-center text-center font-semibold text-gray-600">
+        Please login through Tablet/iPad/PC to access the Admin Dashboard
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden">
