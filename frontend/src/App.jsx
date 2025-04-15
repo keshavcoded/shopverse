@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import { useCartStore } from "./store/useCart";
 import OrderSuccess from "./pages/OrderSuccess";
 import OrderFailed from "./pages/OrderFailed";
+import Footer from "./components/Footer";
 
 function App() {
   const { user, authUserCheck, isCheckingAuth } = useAuthStore();
@@ -66,6 +67,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer />
       <Toaster
         toastOptions={{
           style: {
