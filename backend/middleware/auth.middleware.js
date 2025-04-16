@@ -6,18 +6,16 @@ export const checkAuth = async (req, res, next) => {
   try {
     const accessToken = req.cookies["acess-token"];
     if (!accessToken) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Authorization failed - No token provided",
-        });
+      return res.status(401).json({
+        success: false,
+        message: "Authorization failed - No token provided",
+      });
     }
     try {
       const decoded = jwt.verify(accessToken, ENV_VARS.ACCESS_TOKEN_SECRET);
 
       if (!decoded) {
-        return res.status(400).json({
+        return res.status(401).json({
           sucess: false,
           message: "Authorization failed - Invalid token",
         });
@@ -41,7 +39,11 @@ export const checkAuth = async (req, res, next) => {
           message: "Unauthorized - Access Token expired",
         });
       }
-      console.log(error.message);
+      console.log("JWT verification error:", error.message);
+      return res.status(401).json({
+        success: false,
+        message: "Authorization failed - Token error",
+      });
     }
   } catch (error) {
     console.log("Error in auth middleware : ", error.message);
