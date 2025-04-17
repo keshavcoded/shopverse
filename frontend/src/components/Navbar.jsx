@@ -14,6 +14,7 @@ import { useCartStore } from "../store/useCart";
 const Navbar = () => {
   const { user, signout } = useAuthStore();
   const isAdmin = user?.role === "admin";
+  console.log("User here:", user);
   console.log(user?.role);
   console.log(isAdmin);
 
@@ -34,7 +35,12 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between max-w-7xl">
         {/* Logo */}
         <Link to={"/"} className="items-center space-x-2 flex">
-          <img src="/logo.png" alt="logo" className="w-30 sm:w-40 m-3 sm:h-8" draggable="false" />
+          <img
+            src="/logo.png"
+            alt="logo"
+            className="w-30 sm:w-40 m-3 sm:h-8"
+            draggable="false"
+          />
         </Link>
 
         {/* Desktop Navbar */}
