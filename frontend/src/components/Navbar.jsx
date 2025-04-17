@@ -14,9 +14,6 @@ import { useCartStore } from "../store/useCart";
 const Navbar = () => {
   const { user, signout } = useAuthStore();
   const isAdmin = user?.role === "admin";
-  console.log("User here:", user);
-  console.log(user?.role);
-  console.log(isAdmin);
 
   const { cart } = useCartStore();
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
