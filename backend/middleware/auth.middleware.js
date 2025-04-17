@@ -25,7 +25,7 @@ export const checkAuth = async (req, res, next) => {
 
       if (!user) {
         return res
-          .status(400)
+          .status(401)
           .json({ sucess: false, message: "User not found" });
       }
 
