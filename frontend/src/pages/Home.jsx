@@ -23,8 +23,6 @@ const Home = () => {
     fetchFeaturedProducts();
   }, [fetchFeaturedProducts]);
 
-  console.log("Featured : ", products);
-
   return (
     <div className="relative min-h-screen overflow-hidden">
       <motion.div
