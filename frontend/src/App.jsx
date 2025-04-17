@@ -16,7 +16,8 @@ import OrderFailed from "./pages/OrderFailed";
 import Footer from "./components/Footer";
 
 function App() {
-  const { user, authUserCheck, isCheckingAuth } = useAuthStore();
+  const { user, isCheckingAuth } = useAuthStore();
+  const authUserCheck = useAuthStore((s) => s.authUserCheck);
   const { getCart } = useCartStore();
 
   useEffect(() => {

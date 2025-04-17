@@ -99,9 +99,9 @@ export const useAuthStore = create((set, get) => {
 
       set({ checkingAuth: true });
       try {
-        const response = await axiosInstance.post("/auth/refresh-token");
+        const res = await axiosInstance.post("/auth/refresh-token");
         set({ checkingAuth: false });
-        return response.data;
+        return res.data;
       } catch (error) {
         set({ user: null, checkingAuth: false });
         throw error;
@@ -109,37 +109,3 @@ export const useAuthStore = create((set, get) => {
     },
   };
 });
-
-//axios interceptors
-
-let refreshPromise = null;
-
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // If a refresh is already in progress, wait for it to complete
-        if (refreshPromise) {
-          await refreshPromise;
-          return axiosInstance(originalRequest);
-        }
-
-        // Start a new refresh process
-        refreshPromise = useAuthStore.getState().refreshToken();
-        await refreshPromise;
-        refreshPromise = null;
-
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        // If refresh fails, redirect to login or handle as needed
-        useAuthStore.getState().signout();
-        return Promise.reject(refreshError);
-      }
-    }
-    return Promise.reject(error);
-  }
-);
