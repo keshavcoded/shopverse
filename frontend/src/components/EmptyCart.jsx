@@ -17,10 +17,10 @@ const EmptyCart = () => {
         Add something before it starts overthinking its purpose
       </p>
       <Link
-        className="mt-4 rounded-md bg-gray-700 px-6 py-2 text-gray-100 transition-colors hover:bg-gray-900"
+        className="mt-4 rounded-md bg-gray-900 px-6 py-2 text-gray-100 transition-colors hover:bg-gray-800"
         to={"/"}
       >
-        Let’s Go Shopping
+        Let's Go Shopping
       </Link>
     </motion.div>
   );
