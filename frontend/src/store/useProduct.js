@@ -105,7 +105,6 @@ export const useProductStore = create((set) => {
       set({ isFetchingFeat: true });
       try {
         const res = await axiosInstance.get("/products/featured");
-        console.log("Featured response: ", res);
         set({ products: res.data, isFetchingFeat: false });
       } catch (error) {
         console.log("Error while fetching featured products", error);
