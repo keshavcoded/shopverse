@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js",
-    "build": "pnpm install && pnpm install --prefix frontend && pnpm run build --prefix frontend",
+    "dev": "NODE_ENV=development nodemon backend/server.js",
+    "start": "NODE_ENV=production node backend/server.js",
+    "build": "pnpm install && pnpm install --prefix frontend && pnpm --filter frontend run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
