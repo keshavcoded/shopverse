@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-md shadow-xl z-40 transition-all duration-300">
-      <div className="container mx-auto px-4 py-4 flex justify-between max-w-7xl">
+      <div className="container mx-auto px-4 py-2 flex justify-between max-w-7xl">
         {/* Logo */}
         <Link to={"/"} className="items-center space-x-2 flex">
           <img
@@ -63,7 +63,7 @@ const Navbar = () => {
                 <ShoppingCart className="inline-block mr-1 transition-transform duration-300 ease-in-out w-5 h-7 sm:w-6 sm:h-8" />
                 <span className="ml-2 inline">Cart</span>
                 {cart.length > 0 && (
-                  <span className="absolute -top-0.5 sm:-top-1 right-10 sm:right-9 bg-blue-500 text-white rounded-full px-1 sm:px-2 sm:py-0.5 text-xs transition-transform duration-300 ease-in-out">
+                  <span className="absolute -top-0.5 sm:-top-1 right-10 sm:right-9 bg-stone-600 text-white rounded-full px-1 sm:px-2 sm:py-0.5 text-xs transition-transform duration-300 ease-in-out">
                     {cart.length}
                   </span>
                 )}

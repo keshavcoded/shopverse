@@ -32,16 +32,12 @@ const Home = () => {
         className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px] overflow-hidden"
       >
         <img
-          src="/cover.png"
+          src="/cover3.png"
           alt="Fashion Cover"
           className="w-full h-full object-cover"
           loading="eager"
           draggable="false"
         />
-        <h2 className="absolute top-4 left-4 sm:top-40 sm:left-8 text-gray-700 text-2xl sm:text-3xl lg:text-4xl xl:text-5xl max-w-[1240px] font-bold z-10 px-3 py-2 rounded-md">
-          Find modern looks
-          <span className="block">for the modern you.</span>
-        </h2>
       </motion.div>
 
       <motion.div
@@ -50,10 +46,10 @@ const Home = () => {
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center"
       >
-        <h1 className="text-4xl sm:text-5xl font-medium text-gray-700 mb-4">
+        <h1 className="text-4xl sm:text-5xl font-bold text-stone-800 mb-4">
           Elevate Your Style with Our Collection
         </h1>
-        <p className="text-md sm:text-xl text-gray-600 mb-12">
+        <p className="text-md sm:text-xl text-stone-800 mb-12">
           Find What You Love – Shop by Category!
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
